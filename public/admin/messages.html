@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin - Messages</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Messages</h1>
+    <div id="messagesContainer"></div>
+
+    <template id="rowTpl">
+      <div class="border p-3 mb-3 rounded">
+        <div class="flex justify-between">
+          <div>
+            <strong class="sender"></strong>
+            <span class="ml-2 text-red-500 unread-dot hidden">●</span>
+            <div class="text-sm text-slate-500 subject"></div>
+          </div>
+          <div class="text-sm text-slate-500 created_at"></div>
+        </div>
+        <div class="mt-2 body text-sm"></div>
+        <div class="mt-3 flex gap-2">
+          <button class="viewBtn px-2 py-1 border rounded text-sm">View</button>
+          <button class="replyBtn px-2 py-1 bg-indigo-600 text-white rounded text-sm">Reply</button>
+        </div>
+      </div>
+    </template>
+
+    <div id="viewModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-40 z-50">
+      <div class="bg-white rounded-lg p-6 max-w-xl w-full">
+        <h3 class="text-lg font-semibold mb-2">Message</h3>
+        <div id="viewContent" class="text-sm"></div>
+        <div class="mt-4 flex justify-end gap-3">
+          <button id="closeView" class="px-3 py-2 border rounded">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/admin_messages.js"></script>
+  </body>
+</html>

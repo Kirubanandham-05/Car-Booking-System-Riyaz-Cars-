@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <style>
+    .box { fill:#f8fafc; stroke:#0f172a; stroke-width:1.5; rx:6; }
+    .server { fill:#ecfdf5; stroke:#065f46; }
+    .db { fill:#fff7ed; stroke:#92400e; }
+    .actor { fill:#eef2ff; stroke:#1e40af; }
+    .label { font: 14px/1.2 system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; fill:#0f172a }
+    .small { font-size:12px; fill:#0f172a }
+    .arrow { stroke:#0f172a; stroke-width:1.2; fill:none; marker-end:url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <!-- Actors -->
+  <rect x="40" y="40" width="160" height="60" class="actor box"/>
+  <text x="120" y="75" text-anchor="middle" class="label">User</text>
+  <rect x="40" y="120" width="160" height="40" class="actor box"/>
+  <text x="120" y="145" text-anchor="middle" class="small">Owner / Admin</text>
+
+  <!-- Frontend -->
+  <rect x="240" y="40" width="260" height="120" class="box"/>
+  <text x="370" y="65" class="label" text-anchor="middle">Web Frontend</text>
+  <text x="370" y="90" class="small" text-anchor="middle">public/, app/ pages, public/js/*</text>
+
+  <!-- Server cluster -->
+  <rect x="540" y="20" width="360" height="300" class="server box"/>
+  <text x="720" y="40" class="label" text-anchor="middle">Backend / API (Express)</text>
+
+  <rect x="580" y="70" width="140" height="60" class="box"/>
+  <text x="650" y="100" class="small" text-anchor="middle">API Gateway
+  server/index.js</text>
+
+  <rect x="740" y="70" width="150" height="60" class="box"/>
+  <text x="815" y="85" class="small" text-anchor="middle">Auth / JWT
+  (middleware)</text>
+
+  <rect x="580" y="150" width="310" height="60" class="box"/>
+  <text x="740" y="180" class="small" text-anchor="middle">Contact Handler
+  (POST /api/contact)</text>
+
+  <rect x="580" y="230" width="150" height="60" class="box"/>
+  <text x="655" y="260" class="small" text-anchor="middle">Admin Inbox
+  / Messages</text>
+
+  <rect x="740" y="230" width="150" height="60" class="box"/>
+  <text x="815" y="260" class="small" text-anchor="middle">Cars & Bookings
+  routes</text>
+
+  <rect x="920" y="150" width="130" height="60" class="box"/>
+  <text x="985" y="180" class="small" text-anchor="middle">Email Helper
+  nodemailer</text>
+
+  <!-- DB -->
+  <rect x="540" y="350" width="360" height="120" class="db box"/>
+  <text x="720" y="375" class="label" text-anchor="middle">Postgres</text>
+  <text x="720" y="400" class="small" text-anchor="middle">Tables: users, cars, bookings, messages</text>
+
+  <!-- External services -->
+  <rect x="1020" y="40" width="140" height="60" class="actor box"/>
+  <text x="1090" y="75" text-anchor="middle" class="small">SMTP / Ethereal</text>
+
+  <rect x="1020" y="120" width="140" height="60" class="actor box"/>
+  <text x="1090" y="155" text-anchor="middle" class="small">reCAPTCHA</text>
+
+  <!-- Arrows -->
+  <path d="M200 70 L240 100" class="arrow" />
+  <path d="M300 100 L540 100" class="arrow" />
+  <path d="M700 130 L700 150" class="arrow" />
+  <path d="M820 130 L820 150" class="arrow" />
+
+  <!-- Frontend -> API -->
+  <path d="M500 100 L540 100" class="arrow" />
+
+  <!-- Contact -> DB -->
+  <path d="M740 210 L720 350" class="arrow" />
+  <path d="M720 470 L720 470" class="arrow" />
+
+  <!-- Contact -> Email -->
+  <path d="M1010 180 L1070 180" class="arrow" />
+  <path d="M980 180 L920 180" class="arrow" />
+
+  <!-- AdminInbox -> DB -->
+  <path d="M710 290 L720 350" class="arrow" />
+
+  <!-- API -> DBLayer -> Postgres (visual link) -->
+  <path d="M700 200 L700 350" class="arrow" />
+
+  <!-- Email helper -> SMTP -->
+  <path d="M1000 180 L1020 180" class="arrow" />
+
+  <!-- labels on arrows -->
+  <text x="420" y="85" class="small">HTTP (login, contact, CRUD)</text>
+  <text x="820" y="200" class="small">store message / query</text>
+  <text x="980" y="160" class="small">send / preview</text>
+
+  <!-- small footer -->
+  <text x="20" y="880" class="small">Generated: dfd-all-in-one.svg — editable; Mermaid source is embedded in docs/PROJECT_REPORT.md</text>
+</svg>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Riyaz Cars</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm border-b border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-xl font-bold text-slate-900">Riyaz Cars Admin</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-slate-600">Admin Panel</span>
+                    <div class="relative">
+                        <button id="inboxBtn" class="px-3 py-1 text-sm font-medium text-slate-700 hover:text-slate-900">Inbox <span id="inboxCount" class="ml-1 text-xs text-white bg-red-500 rounded-full px-2 hidden">0</span></button>
+                    </div>
+                    <button id="logoutBtn" class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="text-sm text-slate-600 mb-1">Total Bookings</div>
+                <div id="totalBookings" class="text-3xl font-bold text-slate-900">0</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="text-sm text-slate-600 mb-1">Pending</div>
+                <div id="pendingBookings" class="text-3xl font-bold text-orange-600">0</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="text-sm text-slate-600 mb-1">Approved</div>
+                <div id="approvedBookings" class="text-3xl font-bold text-green-600">0</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="text-sm text-slate-600 mb-1">Revenue</div>
+                <div id="totalRevenue" class="text-3xl font-bold text-blue-600">₹0</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mb-6">
+            <div class="flex gap-2 border-b border-slate-200">
+                <button id="inboxTab" class="px-6 py-3 font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900">
+                    Inbox
+                </button>
+                <button id="bookingsTab" class="px-6 py-3 font-semibold border-b-2 border-blue-600 text-blue-600">
+                    Manage Bookings
+                </button>
+                <button id="carsTab" class="px-6 py-3 font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900">
+                    Manage Cars
+                </button>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <div id="bookingsSection">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <input id="searchInput" type="text" placeholder="Search by customer, email or car" class="px-4 py-2 border rounded-lg" />
+                    <select id="statusFilter" class="px-3 py-2 border rounded-lg">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div>
+                    <button id="exportCsvBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Export CSV</button>
+                </div>
+            </div>
+            <div id="bookingsList" class="space-y-4"></div>
+        </div>
+
+                <!-- Inbox Section -->
+                <div id="inboxSection" class="hidden">
+                        <div class="mb-4">
+                                <h2 class="text-lg font-semibold">Inbox</h2>
+                                <p class="text-sm text-slate-500">Messages sent by users to admins and owners.</p>
+                        </div>
+                        <div id="messagesContainer"></div>
+
+                        <template id="rowTpl">
+                            <div class="border p-3 mb-3 rounded">
+                                <div class="flex justify-between">
+                                    <div>
+                                        <strong class="sender"></strong>
+                                        <span class="ml-2 text-red-500 unread-dot hidden">●</span>
+                                        <div class="text-sm text-slate-500 subject"></div>
+                                    </div>
+                                    <div class="text-sm text-slate-500 created_at"></div>
+                                </div>
+                                <div class="mt-2 body text-sm"></div>
+                                <div class="mt-3 flex gap-2">
+                                    <button class="viewBtn px-2 py-1 border rounded text-sm">View</button>
+                                    <button class="replyBtn px-2 py-1 bg-indigo-600 text-white rounded text-sm">Reply</button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <div id="viewModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-40 z-50">
+                            <div class="bg-white rounded-lg p-6 max-w-xl w-full">
+                                <h3 class="text-lg font-semibold mb-2">Message</h3>
+                                <div id="viewContent" class="text-sm"></div>
+                                <div class="mt-4 flex justify-end gap-3">
+                                    <button id="closeView" class="px-3 py-2 border rounded">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+        <!-- Cars Section -->
+        <div id="carsSection" class="hidden">
+            <div class="mb-6 bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-lg font-semibold mb-4">Add New Car</h2>
+                <div id="addCarMessage" class="hidden p-3 rounded-md mb-3"></div>
+                <form id="addCarForm" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input id="carName" type="text" placeholder="Car name" class="px-4 py-2 border rounded-lg" required />
+                    <input id="carType" type="text" placeholder="Car type (e.g., Sedan, SUV)" class="px-4 py-2 border rounded-lg" required />
+                    <input id="carSeats" type="number" placeholder="Seats" class="px-4 py-2 border rounded-lg" required min="1" />
+                    <input id="carPrice" type="number" step="0.01" placeholder="Price per day (₹)" class="px-4 py-2 border rounded-lg" required min="0" />
+                    <input id="carImage" type="text" placeholder="Image URL (optional)" class="px-4 py-2 border rounded-lg" />
+                    <div class="flex items-center gap-3">
+                        <label class="inline-flex items-center">
+                            <input id="carAvailable" type="checkbox" checked class="mr-2" />
+                            <span class="text-sm text-slate-700">Available</span>
+                        </label>
+                        <button id="addCarBtn" type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Add Car</button>
+                    </div>
+                </form>
+            </div>
+            <div id="carsList" class="grid md:grid-cols-2 gap-6"></div>
+        </div>
+    </div>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/admin.js"></script>
+    <script src="/js/admin_messages.js"></script>
+</body>
+</html>
